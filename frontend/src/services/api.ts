@@ -129,4 +129,17 @@ export const messagesAPI = {
   getUnreadCount: () => api.get('/messages/unread/count'),
 };
 
+// Purchases API (placeholder - would need backend implementation)
+export const purchasesAPI = {
+  getPurchases: () => api.get('/purchases'),
+  
+  getPurchase: (id: string) => api.get(`/purchases/${id}`),
+  
+  createPurchase: (purchaseData: {
+    product_id: number;
+    seller_id: number;
+    price: number;
+  }) => api.post('/purchases', purchaseData),
+};
+
 export default api;

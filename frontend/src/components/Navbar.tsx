@@ -70,6 +70,12 @@ const Navbar = () => {
                   <Heart className="h-4 w-4 mr-2" />
                   Favorites
                 </Button>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm" className="hidden md:flex">
+                    <User className="h-4 w-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
                 <div className="hidden md:flex items-center space-x-2">
                   <span className="text-sm text-muted-foreground">Welcome, {user?.full_name}</span>
                   <Button variant="ghost" size="sm" onClick={logout}>
@@ -148,6 +154,12 @@ const Navbar = () => {
                       <Heart className="h-4 w-4 mr-2" />
                       Favorites
                     </Button>
+                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        <User className="h-4 w-4 mr-2" />
+                        Dashboard
+                      </Button>
+                    </Link>
                     <div className="px-3 py-2 text-sm text-muted-foreground">
                       Welcome, {user?.full_name}
                     </div>
