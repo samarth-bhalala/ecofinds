@@ -1,275 +1,155 @@
-# EcoFinds - Sustainable Marketplace
+# Eco Finds Recycled Hub - Setup Instructions
 
-🌱 **EcoFinds** is a full-stack web application that promotes sustainable living by connecting buyers and sellers of pre-owned, recycled, and eco-friendly items. Built with modern technologies, it provides a seamless marketplace experience while contributing to environmental conservation.
+## Prerequisites
 
-## 🌟 Features
+1. **XAMPP** - Download and install from https://www.apachefriends.org/
+2. **Node.js** - Download and install from https://nodejs.org/ (version 16 or higher)
+3. **Git** - For version control
 
-### For Buyers
-- **Browse Products**: Explore thousands of pre-owned items across multiple categories
-- **Advanced Search**: Filter by category, price range, location, and condition
-- **Quality Verification**: All items are verified for authenticity and quality
-- **Secure Transactions**: Safe payment processing and buyer protection
-- **Community Reviews**: Read reviews from other eco-conscious users
+## Database Setup (XAMPP)
 
-### For Sellers
-- **Easy Listing**: Simple process to list your pre-owned items
-- **Category Management**: Organize items into relevant categories
-- **Image Upload**: Multiple high-quality photos for better visibility
-- **Price Suggestions**: AI-powered pricing recommendations
-- **Seller Dashboard**: Track sales, manage listings, and view analytics
+1. **Start XAMPP Services:**
+   - Open XAMPP Control Panel
+   - Start **Apache** and **MySQL** services
+   - Make sure both services are running (green status)
 
-### Environmental Impact
-- **Carbon Footprint Tracking**: See your environmental impact
-- **Sustainability Metrics**: Track CO₂ savings and waste reduction
-- **Eco-Friendly Badges**: Earn recognition for sustainable practices
-- **Community Impact**: Join thousands making a difference
+2. **Access phpMyAdmin:**
+   - Open your browser and go to `http://localhost/phpmyadmin`
+   - The database will be created automatically when you start the backend server
 
-## 🛠️ Technology Stack
+## Project Setup
 
-### Frontend
-- **React 18** with TypeScript
-- **Vite** for fast development and building
-- **Tailwind CSS** for responsive styling
-- **Radix UI** for accessible components
-- **React Router** for navigation
-- **TanStack Query** for data fetching
-- **React Hook Form** with Zod validation
+### 1. Install Backend Dependencies
 
-### Backend
-- **Node.js** with Express.js
-- **MySQL** database
-- **JWT** authentication
-- **bcrypt** for password hashing
-- **Multer** for file uploads
-- **CORS** enabled for cross-origin requests
-
-### Development Tools
-- **ESLint** for code linting
-- **TypeScript** for type safety
-- **Concurrently** for running multiple processes
-- **Hot reload** for development
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- MySQL database
-- Git
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd ecofinds
-   ```
-
-2. **Install all dependencies**
-   ```bash
-   npm run setup
-   ```
-
-3. **Set up the database**
-   ```bash
-   cd backend
-   npm run setup-db
-   npm run seed-data
-   ```
-
-4. **Configure environment variables**
-   Create a `.env` file in the backend directory:
-   ```env
-   DB_HOST=localhost
-   DB_USER=your_username
-   DB_PASSWORD=your_password
-   DB_NAME=ecofinds_db
-   JWT_SECRET=your_jwt_secret
-   PORT=3000
-   ```
-
-5. **Start the development servers**
-   ```bash
-   npm run dev
-   ```
-
-   This will start:
-   - Backend server on `http://localhost:3000`
-   - Frontend development server on `http://localhost:8080`
-
-### Alternative Setup (Manual)
-
-If you prefer to set up each part separately:
-
-1. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   npm run dev
-   ```
-
-2. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-## 📁 Project Structure
-
-```
-ecofinds/
-├── backend/                 # Node.js backend
-│   ├── config/             # Database configuration
-│   ├── middleware/         # Authentication & validation
-│   ├── routes/             # API endpoints
-│   ├── scripts/            # Database setup scripts
-│   └── server.js           # Main server file
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── contexts/       # React contexts
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API services
-│   │   └── lib/            # Utility functions
-│   └── public/             # Static assets
-└── README.md
+```bash
+cd backend
+npm install
 ```
 
-## 🔧 Available Scripts
+### 2. Install Frontend Dependencies
 
-### Root Level
-- `npm run setup` - Install all dependencies
-- `npm run dev` - Start both frontend and backend
-- `npm run dev:frontend` - Start only frontend
-- `npm run dev:backend` - Start only backend
-- `npm run build` - Build frontend for production
+```bash
+cd ../frontend
+npm install
+```
 
-### Backend Scripts
-- `npm run dev` - Start development server
-- `npm start` - Start production server
-- `npm run setup-db` - Initialize database
-- `npm run seed-data` - Populate with sample data
-- `npm run test-api` - Test API endpoints
+### 3. Environment Configuration
 
-### Frontend Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+The backend uses the following default database settings (in `backend/.env`):
+- Host: localhost
+- User: root
+- Password: (empty - default XAMPP setup)
+- Database: eco_finds_db
+- Port: 3306
 
-## 🌐 API Endpoints
+If your XAMPP MySQL has a different password, update the `DB_PASSWORD` in `backend/.env`.
+
+### 4. Start the Application
+
+**Terminal 1 - Backend Server:**
+```bash
+cd backend
+npm run dev
+```
+The backend will start on `http://localhost:5000`
+
+**Terminal 2 - Frontend Development Server:**
+```bash
+cd frontend
+npm run dev
+```
+The frontend will start on `http://localhost:5173`
+
+## API Endpoints
+
+The backend provides the following API endpoints:
 
 ### Authentication
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `GET /api/auth/profile` - Get user profile
+- `PUT /api/auth/profile` - Update user profile
 
 ### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
+- `GET /api/products` - Get all products (with pagination and filters)
+- `GET /api/products/:id` - Get single product
 - `POST /api/products` - Create new product
 - `PUT /api/products/:id` - Update product
 - `DELETE /api/products/:id` - Delete product
+- `GET /api/products/user/:userId` - Get user's products
 
 ### Categories
 - `GET /api/categories` - Get all categories
-- `POST /api/categories` - Create new category
+- `GET /api/categories/:id` - Get single category
 
-### User Management
-- `GET /api/users/dashboard` - Get user dashboard
-- `PUT /api/users/profile` - Update user profile
+### Favorites
+- `GET /api/favorites` - Get user's favorites
+- `POST /api/favorites/:productId` - Add to favorites
+- `DELETE /api/favorites/:productId` - Remove from favorites
 
-## 🎨 UI Components
+### Messages
+- `GET /api/messages/conversations` - Get user's conversations
+- `GET /api/messages/:userId` - Get messages with specific user
+- `POST /api/messages` - Send message
+- `GET /api/messages/unread/count` - Get unread message count
 
-The project uses a comprehensive set of reusable UI components built with Radix UI and styled with Tailwind CSS:
+## Database Schema
 
-- **Forms**: Input, Button, Select, Checkbox, Radio Group
-- **Navigation**: Navbar, Breadcrumb, Pagination
-- **Feedback**: Toast, Alert, Progress, Skeleton
-- **Layout**: Card, Sheet, Dialog, Accordion
-- **Data Display**: Table, Badge, Avatar, Tooltip
+The application automatically creates the following tables:
 
-## 🔒 Security Features
+1. **users** - User accounts and profiles
+2. **categories** - Product categories
+3. **products** - Product listings
+4. **favorites** - User's favorite products
+5. **messages** - User-to-user messaging
 
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: bcrypt for secure password storage
-- **Input Validation**: Zod schema validation
-- **CORS Protection**: Configured for secure cross-origin requests
-- **SQL Injection Prevention**: Parameterized queries
+## Default Categories
 
-## 🌱 Environmental Impact
+The system comes with these default categories:
+- Electronics
+- Furniture
+- Clothing
+- Books
+- Sports
+- Home & Garden
+- Toys & Games
+- Automotive
 
-EcoFinds is designed to promote sustainable living:
+## Troubleshooting
 
-- **Waste Reduction**: Extends product lifecycles
-- **Carbon Footprint**: Tracks environmental impact
-- **Community Building**: Connects eco-conscious users
-- **Education**: Promotes sustainable consumption habits
+### Database Connection Issues
+1. Make sure XAMPP MySQL is running
+2. Check if the database credentials in `backend/.env` match your XAMPP setup
+3. Verify MySQL is running on port 3306
 
-## 🤝 Contributing
+### Port Conflicts
+- Backend runs on port 5000 (change in `backend/.env` if needed)
+- Frontend runs on port 5173 (change in `frontend/vite.config.ts` if needed)
 
-We welcome contributions! Please follow these steps:
+### CORS Issues
+- Make sure the `FRONTEND_URL` in `backend/.env` matches your frontend URL
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Production Deployment
 
-### Development Guidelines
-- Follow the existing code style
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation as needed
+For production deployment:
 
-## 📝 License
+1. Update environment variables in `backend/.env`
+2. Set `NODE_ENV=production`
+3. Use a production database (not XAMPP)
+4. Build the frontend: `cd frontend && npm run build`
+5. Serve the built files with a web server
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Features
 
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-repo/issues) page
-2. Create a new issue with detailed information
-3. Contact the development team
-
-## 🚀 Deployment
-
-### Production Build
-```bash
-npm run build
-```
-
-### Environment Variables for Production
-Ensure you have the following environment variables set:
-- Database connection details
-- JWT secret key
-- File upload configuration
-- CORS settings
-
-## 📊 Performance
-
-- **Frontend**: Optimized with Vite for fast builds and hot reload
-- **Backend**: Express.js with efficient middleware
-- **Database**: MySQL with proper indexing
-- **Images**: Optimized file uploads and storage
-
-## 🔮 Future Enhancements
-
-- [ ] Mobile app (React Native)
-- [ ] Real-time chat system
-- [ ] Advanced analytics dashboard
-- [ ] AI-powered product recommendations
-- [ ] Integration with shipping providers
-- [ ] Multi-language support
-- [ ] Dark mode theme
-- [ ] Progressive Web App (PWA) features
-
----
-
-**Made with ❤️ for a sustainable future**
-
-*Join us in building a more eco-conscious world, one transaction at a time.*
+- ✅ User authentication (register/login)
+- ✅ Product listing and management
+- ✅ Category-based browsing
+- ✅ Search and filtering
+- ✅ User profiles
+- ✅ Favorites system
+- ✅ Messaging between users
+- ✅ Responsive design
+- ✅ Real-time updates
+- ✅ Image upload support
+- ✅ Pagination
+- ✅ Security middleware
