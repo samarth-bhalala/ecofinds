@@ -77,7 +77,7 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 <div className="hidden md:flex items-center space-x-2">
-                  <span className="text-sm text-muted-foreground">Welcome, {user?.full_name}</span>
+                  <span className="text-sm text-muted-foreground">Welcome, {user?.display_name}</span>
                   <Button variant="ghost" size="sm" onClick={logout}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
@@ -161,7 +161,7 @@ const Navbar = () => {
                       </Button>
                     </Link>
                     <div className="px-3 py-2 text-sm text-muted-foreground">
-                      Welcome, {user?.full_name}
+                      Welcome, {user?.display_name}
                     </div>
                     <Button variant="ghost" size="sm" className="w-full justify-start" onClick={logout}>
                       <LogOut className="h-4 w-4 mr-2" />

@@ -10,7 +10,7 @@ const router = express.Router();
 // Register new user
 router.post('/register', validateUserRegistration, async (req, res) => {
   try {
-    const { username, email, password, full_name, phone, address } = req.body;
+    const { username, email, password, display_name, phone, address } = req.body;
 
     // Check if user already exists
     const [existingUsers] = await pool.execute(
@@ -27,8 +27,8 @@ router.post('/register', validateUserRegistration, async (req, res) => {
 
     // Insert new user
     const [result] = await pool.execute(
-      'INSERT INTO users (username, email, password, full_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
-      [username, email, hashedPassword, full_name, phone, address]
+      'INSERT INTO users (username, email, password, display_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
+      [username, email, hashedPassword, display_name, phone, address]
     );
 
     // Generate JWT token
@@ -45,7 +45,7 @@ router.post('/register', validateUserRegistration, async (req, res) => {
         id: result.insertId,
         username,
         email,
-        full_name
+        display_name: display_name
       }
     });
   } catch (error) {
@@ -91,7 +91,7 @@ router.post('/login', validateUserLogin, async (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        full_name: user.full_name,
+        display_name: user.display_name,
         profile_image: user.profile_image
       }
     });
@@ -105,7 +105,7 @@ router.post('/login', validateUserLogin, async (req, res) => {
 router.get('/profile', authenticateToken, async (req, res) => {
   try {
     const [users] = await pool.execute(
-      'SELECT id, username, email, full_name, phone, address, profile_image, created_at FROM users WHERE id = ?',
+      'SELECT id, username, email, display_name, phone, address, profile_image, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
 
@@ -123,11 +123,11 @@ router.get('/profile', authenticateToken, async (req, res) => {
 // Update user profile
 router.put('/profile', authenticateToken, async (req, res) => {
   try {
-    const { full_name, phone, address } = req.body;
+    const { display_name, phone, address } = req.body;
 
     await pool.execute(
-      'UPDATE users SET full_name = ?, phone = ?, address = ? WHERE id = ?',
-      [full_name, phone, address, req.user.id]
+      'UPDATE users SET display_name = ?, phone = ?, address = ? WHERE id = ?',
+      [display_name, phone, address, req.user.id]
     );
 
     res.json({ message: 'Profile updated successfully' });

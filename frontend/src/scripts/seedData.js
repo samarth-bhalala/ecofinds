@@ -27,7 +27,7 @@ const createUsers = async () => {
       username: 'john_doe',
       email: 'john@example.com',
       password: 'password123',
-      full_name: 'John Doe',
+      display_name: 'John Doe',
       phone: '+1234567890',
       address: '123 Main St, New York, NY 10001'
     },
@@ -35,7 +35,7 @@ const createUsers = async () => {
       username: 'jane_smith',
       email: 'jane@example.com',
       password: 'password123',
-      full_name: 'Jane Smith',
+      display_name: 'Jane Smith',
       phone: '+1234567891',
       address: '456 Oak Ave, Los Angeles, CA 90210'
     },
@@ -43,7 +43,7 @@ const createUsers = async () => {
       username: 'mike_wilson',
       email: 'mike@example.com',
       password: 'password123',
-      full_name: 'Mike Wilson',
+      display_name: 'Mike Wilson',
       phone: '+1234567892',
       address: '789 Pine Rd, Chicago, IL 60601'
     },
@@ -51,7 +51,7 @@ const createUsers = async () => {
       username: 'sarah_jones',
       email: 'sarah@example.com',
       password: 'password123',
-      full_name: 'Sarah Jones',
+      display_name: 'Sarah Jones',
       phone: '+1234567893',
       address: '321 Elm St, Houston, TX 77001'
     },
@@ -59,7 +59,7 @@ const createUsers = async () => {
       username: 'admin_user',
       email: 'admin@ecofinds.com',
       password: 'password123',
-      full_name: 'Admin User',
+      display_name: 'Admin User',
       phone: '+1234567894',
       address: '555 Admin Blvd, San Francisco, CA 94101'
     }

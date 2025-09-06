@@ -29,7 +29,7 @@ const seedData = async () => {
         username: 'john_doe',
         email: 'john@example.com',
         password: hashedPassword,
-        full_name: 'John Doe',
+        display_name: 'John Doe',
         phone: '+1234567890',
         address: '123 Main St, New York, NY 10001'
       },
@@ -37,7 +37,7 @@ const seedData = async () => {
         username: 'jane_smith',
         email: 'jane@example.com',
         password: hashedPassword,
-        full_name: 'Jane Smith',
+        display_name: 'Jane Smith',
         phone: '+1234567891',
         address: '456 Oak Ave, Los Angeles, CA 90210'
       },
@@ -45,7 +45,7 @@ const seedData = async () => {
         username: 'mike_wilson',
         email: 'mike@example.com',
         password: hashedPassword,
-        full_name: 'Mike Wilson',
+        display_name: 'Mike Wilson',
         phone: '+1234567892',
         address: '789 Pine Rd, Chicago, IL 60601'
       },
@@ -53,7 +53,7 @@ const seedData = async () => {
         username: 'sarah_jones',
         email: 'sarah@example.com',
         password: hashedPassword,
-        full_name: 'Sarah Jones',
+        display_name: 'Sarah Jones',
         phone: '+1234567893',
         address: '321 Elm St, Houston, TX 77001'
       },
@@ -61,7 +61,7 @@ const seedData = async () => {
         username: 'admin_user',
         email: 'admin@ecofinds.com',
         password: hashedPassword,
-        full_name: 'Admin User',
+        display_name: 'Admin User',
         phone: '+1234567894',
         address: '555 Admin Blvd, San Francisco, CA 94101'
       }
@@ -69,8 +69,8 @@ const seedData = async () => {
 
     for (const user of users) {
       await connection.execute(
-        'INSERT IGNORE INTO users (username, email, password, full_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
-        [user.username, user.email, user.password, user.full_name, user.phone, user.address]
+        'INSERT IGNORE INTO users (username, email, password, display_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
+        [user.username, user.email, user.password, user.display_name, user.phone, user.address]
       );
     }
 

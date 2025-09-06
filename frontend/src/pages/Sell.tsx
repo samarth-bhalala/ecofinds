@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,11 +13,11 @@ import {
   DollarSign, 
   Camera,
   ArrowLeft,
-  Leaf,
-  AlertCircle,
-  CheckCircle
+  Leaf
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { productsAPI, categoriesAPI } from "@/services/api";
 import Navbar from "@/components/Navbar";
 
 const Sell = () => {
@@ -31,20 +31,38 @@ const Sell = () => {
   });
   const [images, setImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [categories, setCategories] = useState<Array<{id: number, name: string}>>([]);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
 
-  const categories = [
-    "Clothing",
-    "Electronics", 
-    "Home & Garden",
-    "Furniture",
-    "Sports & Outdoors",
-    "Books",
-    "Toys & Games",
-    "Art & Collectibles",
-    "Jewelry & Accessories",
-    "Other"
-  ];
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoriesAPI.getCategories();
+        // Deduplicate categories by name
+        const uniqueCategories = response.data.categories.reduce((acc: Array<{id: number, name: string}>, category: any) => {
+          if (!acc.find(c => c.name === category.name)) {
+            acc.push({ id: category.id, name: category.name });
+          }
+          return acc;
+        }, []);
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load categories. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [toast]);
 
   const conditions = [
     { value: "new", label: "New", description: "Never used, in original packaging" },
@@ -82,11 +100,39 @@ const Sell = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      toast({
+        title: "Login Required",
+        description: "Please log in to create a listing.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Find the selected category ID
+      const selectedCategory = categories.find(cat => cat.name.toLowerCase() === formData.category.toLowerCase());
+      if (!selectedCategory) {
+        throw new Error("Please select a valid category");
+      }
+
+      // Prepare product data
+      const productData = {
+        title: formData.title,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        category_id: selectedCategory.id,
+        condition_type: formData.condition,
+        location: formData.location || null
+      };
+
+      // Create the product
+      const response = await productsAPI.createProduct(productData);
+      
       toast({
         title: "Listing created successfully!",
         description: "Your item is now live on EcoFinds marketplace.",
@@ -103,7 +149,17 @@ const Sell = () => {
         location: ""
       });
       setImages([]);
-    }, 2000);
+      
+    } catch (error: any) {
+      console.error('Error creating product:', error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.error || error.message || "Failed to create listing. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getConditionColor = (condition: string) => {
@@ -145,7 +201,27 @@ const Sell = () => {
         <div className="max-w-4xl mx-auto grid lg:grid-cols-3 gap-8">
           {/* Main Form */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            {!isAuthenticated ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <h3 className="text-lg font-semibold mb-2">Login Required</h3>
+                  <p className="text-muted-foreground mb-4">
+                    You need to be logged in to create a listing.
+                  </p>
+                  <Link to="/login">
+                    <Button>Go to Login</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ) : loading ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-muted-foreground">Loading categories...</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
               {/* Photos Section */}
               <Card>
                 <CardHeader>
@@ -243,8 +319,8 @@ const Sell = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {categories.map((category) => (
-                            <SelectItem key={category} value={category.toLowerCase()}>
-                              {category}
+                            <SelectItem key={category.id} value={category.name.toLowerCase()}>
+                              {category.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -323,71 +399,12 @@ const Sell = () => {
                   "Create Listing"
                 )}
               </Button>
-            </form>
+              </form>
+            )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Tips Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-lg">
-                  <CheckCircle className="h-5 w-5 text-success" />
-                  <span>Selling Tips</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Take high-quality photos in good lighting</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Be honest about condition and flaws</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Research similar items for competitive pricing</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Respond quickly to buyer messages</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Include measurements and brand details</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Safety Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-lg">
-                  <AlertCircle className="h-5 w-5 text-warning-foreground" />
-                  <span>Safety First</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-warning-foreground rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Meet in public places for local pickup</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-warning-foreground rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Use EcoFinds messaging system</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-warning-foreground rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Never give out personal information</span>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <div className="h-1.5 w-1.5 bg-warning-foreground rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Report suspicious activity</span>
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Environmental Impact */}
             <Card className="bg-primary/5 border-primary/20">
               <CardContent className="p-4">

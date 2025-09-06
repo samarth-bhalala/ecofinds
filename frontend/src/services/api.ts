@@ -50,7 +50,7 @@ export const authAPI = {
     username: string;
     email: string;
     password: string;
-    full_name: string;
+    display_name: string;
     phone?: string;
     address?: string;
   }) => api.post('/auth/register', userData),
@@ -61,7 +61,7 @@ export const authAPI = {
   getProfile: () => api.get('/auth/profile'),
 
   updateProfile: (profileData: {
-    full_name: string;
+    display_name: string;
     phone?: string;
     address?: string;
   }) => api.put('/auth/profile', profileData),

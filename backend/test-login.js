@@ -51,7 +51,7 @@ const testLogin = async () => {
         id: user.id,
         username: user.username,
         email: user.email,
-        full_name: user.full_name
+        display_name: user.display_name
       });
     }
     

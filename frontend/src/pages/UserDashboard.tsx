@@ -43,7 +43,7 @@ const UserDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editForm, setEditForm] = useState({
-    full_name: user?.full_name || '',
+    display_name: user?.display_name || '',
     phone: '',
     address: ''
   });
@@ -52,7 +52,7 @@ const UserDashboard = () => {
     if (user) {
       fetchUserData();
       setEditForm({
-        full_name: user.full_name || '',
+        display_name: user.display_name || '',
         phone: '',
         address: ''
       });
@@ -145,12 +145,12 @@ const UserDashboard = () => {
                   <Avatar className="h-24 w-24">
                     <AvatarImage src={user?.profile_image} />
                     <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
-                      {getInitials(user?.full_name || 'U')}
+                      {getInitials(user?.display_name || 'U')}
                     </AvatarFallback>
                   </Avatar>
                   
                   <div className="space-y-2">
-                    <h2 className="text-xl font-semibold">{user?.full_name}</h2>
+                    <h2 className="text-xl font-semibold">{user?.display_name}</h2>
                     <p className="text-muted-foreground">{user?.email}</p>
                   </div>
 
@@ -170,11 +170,11 @@ const UserDashboard = () => {
                       </DialogHeader>
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          <Label htmlFor="full_name">Full Name</Label>
+                          <Label htmlFor="display_name">Display Name</Label>
                           <Input
-                            id="full_name"
-                            value={editForm.full_name}
-                            onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
+                            id="display_name"
+                            value={editForm.display_name}
+                            onChange={(e) => setEditForm({ ...editForm, display_name: e.target.value })}
                           />
                         </div>
                         <div className="space-y-2">

@@ -5,7 +5,7 @@ export const validateUserRegistration = (req, res, next) => {
     username: Joi.string().pattern(/^[a-zA-Z0-9_-]+$/).min(3).max(30).required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
-    full_name: Joi.string().min(2).max(100).required(),
+    display_name: Joi.string().min(2).max(100).required(),
     phone: Joi.string().pattern(/^[0-9+\-\s()]+$/).optional(),
     address: Joi.string().max(500).optional()
   });

@@ -5,7 +5,7 @@ interface User {
   id: number;
   username: string;
   email: string;
-  full_name: string;
+  display_name: string;
   profile_image?: string;
 }
 
@@ -17,7 +17,7 @@ interface AuthContextType {
     username: string;
     email: string;
     password: string;
-    full_name: string;
+    display_name: string;
     phone?: string;
     address?: string;
   }) => Promise<void>;
@@ -80,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     username: string;
     email: string;
     password: string;
-    full_name: string;
+    display_name: string;
     phone?: string;
     address?: string;
   }) => {

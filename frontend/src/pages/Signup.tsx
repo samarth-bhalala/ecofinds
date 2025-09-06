@@ -14,8 +14,7 @@ import Navbar from "@/components/Navbar";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    displayName: "",
     email: "",
     password: "",
     confirmPassword: ""
@@ -65,10 +64,10 @@ const Signup = () => {
     
     try {
       await register({
-        username: `${formData.firstName.toLowerCase()}_${formData.lastName.toLowerCase()}`,
+        username: formData.displayName.toLowerCase().replace(/\s+/g, '_'),
         email: formData.email,
         password: formData.password,
-        full_name: `${formData.firstName} ${formData.lastName}`,
+        display_name: formData.displayName,
       });
       toast({
         title: "Welcome to EcoFinds!",
@@ -110,31 +109,17 @@ const Signup = () => {
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    placeholder="John"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
+            <div className="space-y-2">
+              <Label htmlFor="displayName">Display Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Doe"
-                  value={formData.lastName}
+                  id="displayName"
+                  name="displayName"
+                  placeholder="John Doe"
+                  value={formData.displayName}
                   onChange={handleInputChange}
+                  className="pl-10"
                   required
                 />
               </div>
