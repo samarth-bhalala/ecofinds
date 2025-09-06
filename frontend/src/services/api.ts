@@ -85,8 +85,21 @@ export const productsAPI = {
     title: string;
     description: string;
     price: number;
+    quantity?: number;
     category_id: number;
     condition_type?: string;
+    year_of_manufacture?: number;
+    brand?: string;
+    model?: string;
+    length?: number;
+    width?: number;
+    height?: number;
+    weight?: number;
+    material?: string;
+    color?: string;
+    has_original_packaging?: boolean;
+    has_manual_instructions?: boolean;
+    working_condition_description?: string;
     location?: string;
   }) => api.post('/products', productData),
 

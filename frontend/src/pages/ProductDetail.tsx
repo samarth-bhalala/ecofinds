@@ -169,16 +169,16 @@ The jacket shows some natural patina which adds to its authentic vintage charact
             {/* Pricing */}
             <div className="bg-card border rounded-lg p-4">
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl font-bold text-primary">${product.price}</span>
+                <span className="text-3xl font-bold text-primary">₹{product.price}</span>
                 <span className="text-lg text-muted-foreground line-through">
-                  ${product.originalPrice}
+                  ₹{product.originalPrice}
                 </span>
                 <Badge className="bg-success/20 text-success">
                   {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off
                 </Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                Save ${product.originalPrice - product.price} compared to retail
+                Save ₹{product.originalPrice - product.price} compared to retail
               </p>
             </div>
 

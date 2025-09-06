@@ -151,12 +151,27 @@ router.get('/:id', optionalAuth, async (req, res) => {
 // Create new product
 router.post('/', authenticateToken, validateProduct, async (req, res) => {
   try {
-    const { title, description, price, category_id, condition_type, location } = req.body;
+    const { 
+      title, description, price, quantity, category_id, condition_type, 
+      year_of_manufacture, brand, model, length, width, height, weight,
+      material, color, has_original_packaging, has_manual_instructions,
+      working_condition_description, location 
+    } = req.body;
     const seller_id = req.user.id;
 
     const [result] = await pool.execute(
-      'INSERT INTO products (title, description, price, category_id, seller_id, condition_type, location) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [title, description, price, category_id, seller_id, condition_type, location]
+      `INSERT INTO products (
+        title, description, price, quantity, category_id, seller_id, condition_type,
+        year_of_manufacture, brand, model, length, width, height, weight,
+        material, color, has_original_packaging, has_manual_instructions,
+        working_condition_description, location
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        title, description, price, quantity, category_id, seller_id, condition_type,
+        year_of_manufacture, brand, model, length, width, height, weight,
+        material, color, has_original_packaging, has_manual_instructions,
+        working_condition_description, location
+      ]
     );
 
     res.status(201).json({

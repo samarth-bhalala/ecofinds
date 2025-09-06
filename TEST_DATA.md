@@ -16,59 +16,59 @@ The database has been populated with comprehensive test data for development and
 ## 📦 Test Products (10 products)
 
 ### Electronics
-1. **MacBook Pro 2019 - 13 inch** - $800.00
+1. **MacBook Pro 2019 - 13 inch** - ₹800.00
    - Seller: Jane Smith
    - Condition: Good
    - Location: Los Angeles, CA
 
-2. **Wireless Bluetooth Headphones** - $75.00
+2. **Wireless Bluetooth Headphones** - ₹75.00
    - Seller: John Doe
    - Condition: Good
    - Location: New York, NY
 
 ### Furniture
-3. **Vintage Wooden Bookshelf** - $150.00
+3. **Vintage Wooden Bookshelf** - ₹150.00
    - Seller: John Doe
    - Condition: Excellent
    - Location: New York, NY
 
-4. **Coffee Table - Modern Design** - $200.00
+4. **Coffee Table - Modern Design** - ₹200.00
    - Seller: Admin User
    - Condition: Excellent
    - Location: San Francisco, CA
 
 ### Clothing
-5. **Nike Air Max 270 - Size 10** - $80.00
+5. **Nike Air Max 270 - Size 10** - ₹80.00
    - Seller: Mike Wilson
    - Condition: Excellent
    - Location: Chicago, IL
 
 ### Books
-6. **Harry Potter Complete Book Set** - $120.00
+6. **Harry Potter Complete Book Set** - ₹120.00
    - Seller: Sarah Jones
    - Condition: Good
    - Location: Houston, TX
 
 ### Sports
-7. **Basketball - Spalding Official** - $25.00
+7. **Basketball - Spalding Official** - ₹25.00
    - Seller: John Doe
    - Condition: Excellent
    - Location: New York, NY
 
 ### Home & Garden
-8. **Garden Tools Set** - $45.00
+8. **Garden Tools Set** - ₹45.00
    - Seller: Jane Smith
    - Condition: Good
    - Location: Los Angeles, CA
 
 ### Toys & Games
-9. **LEGO Creator Set - 3-in-1** - $35.00
+9. **LEGO Creator Set - 3-in-1** - ₹35.00
    - Seller: Mike Wilson
    - Condition: Good
    - Location: Chicago, IL
 
 ### Automotive
-10. **Car Phone Mount - Universal** - $15.00
+10. **Car Phone Mount - Universal** - ₹15.00
     - Seller: Sarah Jones
     - Condition: Excellent
     - Location: Houston, TX

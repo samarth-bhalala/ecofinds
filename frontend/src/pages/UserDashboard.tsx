@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Edit, Package, ShoppingBag, User, Mail, Phone, MapPin, Calendar, DollarSign } from 'lucide-react';
+import { Edit, Package, ShoppingBag, User, Mail, Phone, MapPin, Calendar } from 'lucide-react';
 import { productsAPI, authAPI, purchasesAPI } from '@/services/api';
 import { toast } from 'sonner';
 
@@ -255,7 +255,7 @@ const UserDashboard = () => {
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium truncate">{product.title}</p>
                             <p className="text-xs text-muted-foreground">
-                              ${product.price} • {product.condition_type}
+                              ₹{product.price} • {product.condition_type}
                             </p>
                           </div>
                           <Badge variant="outline" className="text-xs">
@@ -304,7 +304,7 @@ const UserDashboard = () => {
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium truncate">{purchase.product.title}</p>
                             <p className="text-xs text-muted-foreground">
-                              ${purchase.price} • {formatDate(purchase.created_at)}
+                              ₹{purchase.price} • {formatDate(purchase.created_at)}
                             </p>
                           </div>
                           <Badge 
@@ -355,13 +355,13 @@ const UserDashboard = () => {
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">
-                      ${userProducts.reduce((sum, product) => sum + product.price, 0).toFixed(0)}
+                      ₹{userProducts.reduce((sum, product) => sum + product.price, 0).toFixed(0)}
                     </div>
                     <div className="text-sm text-muted-foreground">Total Listed</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">
-                      ${purchases.reduce((sum, purchase) => sum + purchase.price, 0).toFixed(0)}
+                      ₹{purchases.reduce((sum, purchase) => sum + purchase.price, 0).toFixed(0)}
                     </div>
                     <div className="text-sm text-muted-foreground">Total Spent</div>
                   </div>

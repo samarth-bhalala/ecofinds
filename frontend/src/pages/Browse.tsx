@@ -266,7 +266,7 @@ const Browse = () => {
               </CardContent>
               
               <CardFooter className="p-4 pt-0 flex items-center justify-between">
-                <span className="text-lg font-bold text-primary">${product.price}</span>
+                <span className="text-lg font-bold text-primary">₹{product.price}</span>
                 <Link to={`/product/${product.id}`}>
                   <Button size="sm" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
                     View Details

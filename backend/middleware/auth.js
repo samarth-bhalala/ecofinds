@@ -14,7 +14,7 @@ export const authenticateToken = async (req, res, next) => {
     
     // Get user from database
     const [users] = await pool.execute(
-      'SELECT id, username, email, display_name, profile_image FROM users WHERE id = ?',
+      'SELECT id, username, email, full_name as display_name, profile_image FROM users WHERE id = ?',
       [decoded.userId]
     );
 
@@ -42,7 +42,7 @@ export const optionalAuth = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     const [users] = await pool.execute(
-      'SELECT id, username, email, display_name, profile_image FROM users WHERE id = ?',
+      'SELECT id, username, email, full_name as display_name, profile_image FROM users WHERE id = ?',
       [decoded.userId]
     );
 

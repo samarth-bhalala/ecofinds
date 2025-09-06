@@ -69,7 +69,7 @@ const seedData = async () => {
 
     for (const user of users) {
       await connection.execute(
-        'INSERT IGNORE INTO users (username, email, password, display_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
+        'INSERT IGNORE INTO users (username, email, password, full_name, phone, address) VALUES (?, ?, ?, ?, ?, ?)',
         [user.username, user.email, user.password, user.display_name, user.phone, user.address]
       );
     }
